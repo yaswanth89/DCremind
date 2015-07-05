@@ -1,17 +1,16 @@
 <?php
 	include "simple_html_dom.php";
-	$aContext = array(
-	    'http' => array(
-	        'proxy' => 'tcp://10.3.100.209:8080',
-	        'request_fulluri' => true,
-	    ),
-	);
-	$cxContext = stream_context_create($aContext);
-
-	$net_data = file_get_html($_POST['url'],False, $cxContext);
-
 	
-	$net_latest = $net_data->find($_POST['sel'],$_POST['index']);
 	
-	echo htmlentities($net_latest->innertext);
+	$net_data = file_get_html("http://in.bookmyshow.com/buytickets/baahubali-the-beginning-telugu-hyderabad/movie-hyd-ET00016239-MT/20150710",False);
+
+	$con="";
+
+	foreach ($net_data->find(".cinhead span.bold") as $tr) {
+		$con .= " ".$tr->plaintext;
+	};
+	if(preg_match("/pvr/i", $con) == 1)
+		echo "book";
+    else
+      	echo "not yet";
 ?>

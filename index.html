@@ -1,0 +1,53 @@
+<html>
+<head>
+	<title>Peddi Bahubhali reminder</title>
+	<!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<header class="navbar navbar-default navbar-static-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Peddi Bahubhali reminder</a>
+			</div>
+			
+		</div>
+    </header>
+    <div class="container">
+    	<audio id="audio"><source src="jack_sparrow.wav" type="audio/wav"></audio>
+    	<span id="status"></span>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jq.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    	el = $("#status");
+
+    	function checkStat(){
+    		el.html("Checking....")
+    		$.get('test.php',function(data){
+				if(data=="book")
+					$("#audio")[0].play();
+				el.html(data);
+				setTimeout(checkStat,30000);
+			}).fail(function() {
+			    el.html('failed');
+				setTimeout(checkStat,30000);
+			});
+    	}
+    	$(window).load(function(){
+    		checkStat();
+    	});
+    </script>
+</body>
+</html>
